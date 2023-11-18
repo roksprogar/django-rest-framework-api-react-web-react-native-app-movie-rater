@@ -49,3 +49,12 @@ class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     authentication_classes = (TokenAuthentication,)
+
+    def create(self, request, *args, **kwargs):
+        response = {'message': 'You can\'t create ratings like this!'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        response = {'message': 'You can\'t update ratings like this!'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
