@@ -7,6 +7,21 @@ class Movie(models.Model):
     title = models.CharField(max_length=32)
     description = models.TextField(max_length=360)
 
+    def number_of_ratings(self):
+        ratings = Rating.objects.filter(movie=self)
+        return len(ratings)
+
+    def average_rating(self):
+        sum_of_ratings = 0
+        ratings = Rating.objects.filter(movie=self)
+        for rating in ratings:
+            sum_of_ratings += rating.stars
+
+        if len(ratings) > 0:
+            return sum_of_ratings / len(ratings)
+
+        return 0
+
 
 class Rating(models.Model):
     class Meta:
