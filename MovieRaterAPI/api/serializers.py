@@ -5,9 +5,10 @@ from api.models import Movie, Rating
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'description')
+        fields = ['id', 'title', 'description']
 
 
 class RatingSerializer(serializers.ModelSerializer):
-    model = Rating
-    fields = ('id', 'starts', 'user', 'movie')
+    class Meta:
+        model = Rating
+        fields = ['id', 'movie', 'user', 'stars']
