@@ -2,4 +2,4 @@ from django.db import models
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=36)
+    title = models.CharField(max_length=36, blank=False, unique=True)
