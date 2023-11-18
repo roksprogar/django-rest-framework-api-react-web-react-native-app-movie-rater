@@ -6,7 +6,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api.models import Movie, Rating
-from api.serializers import MovieSerializer, RatingSerializer
+from api.serializers import MovieSerializer, RatingSerializer, UserSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class MovieViewSet(viewsets.ModelViewSet):
