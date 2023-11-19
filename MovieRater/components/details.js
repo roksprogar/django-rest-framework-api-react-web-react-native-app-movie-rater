@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 
-export default function MovieDetails() {
+export default function MovieDetails({route}) {
+
+  const { movie } = route.params
+
   return (
     <View>
-      <Text>Details</Text>
+      <Text>Details about {movie.title}</Text>
     </View>
   );
 }
