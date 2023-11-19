@@ -4,6 +4,8 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 export default function MovieEdit({route, navigation}) {
 
   const { movie } = route.params
+  const [ title, setTitle ] = useState(movie.title)
+  const [ description, setDescription ] = useState(movie.description)
 
   useEffect(() => {
     navigation.setOptions({
@@ -16,11 +18,31 @@ export default function MovieEdit({route, navigation}) {
         fontWeight: 'bold',
         fontSize: 24,
       },
+      headerRight: () => (
+        <Button
+          title="Delete"
+          color="white"
+          onPress={deleteMovie}
+        />
+      ),
     })
   }, [])
 
-  const [ title, setTitle ] = useState(movie.title)
-  const [ description, setDescription ] = useState(movie.description)
+  const deleteMovie = () => {
+    if (movie.id) {
+      fetch(`http://192.168.1.177:8000/api/movies/${movie.id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+        }
+      })
+      .then(res => {
+        navigation.navigate("MovieList")
+      })
+      .catch(error => console.log(error))
+    }
+  }
 
   const saveMovie = () => {
     if (movie.id) {
