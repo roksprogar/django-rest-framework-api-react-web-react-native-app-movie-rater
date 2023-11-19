@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Auth({navigation}) {
 
@@ -21,22 +22,31 @@ export default function Auth({navigation}) {
   }, [])
 
   const auth = () => {
-    fetch(`http://192.168.1.177:8000/api/movies/${movie.id}/`, {
-        method: 'PUT',
+    fetch(`http://192.168.1.177:8000/auth/`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
     },
     body: JSON.stringify({
-        title,
-        description,
+        username,
+        password,
     })
     })
     .then(res => res.json())
-    .then(movie => {
-        navigation.navigate("MovieDetails", {movie: movie})
+    .then(res => {
+        saveData(res.token)
+        navigation.navigate("MovieList")
     })
     .catch(error => console.log(error))
+  }
+
+  const saveData = async (token) => {
+    await AsyncStorage.setItem('MR_Token', token);
+  }
+
+  const getData = async () => {
+    token = await AsyncStorage.getItem('MR_Token');
+    if (token) navigation.navigate("MovieList")
   }
 
   return (
@@ -47,6 +57,7 @@ export default function Auth({navigation}) {
         placeholder='Username'
         onChangeText={text => setUsername(text)}
         value={username}
+        autoCapitalize='none'
       />
       <Text style={styles.label}>Password</Text>
       <TextInput
@@ -54,6 +65,8 @@ export default function Auth({navigation}) {
         placeholder='Password'
         onChangeText={text => setPassword(text)}
         value={password}
+        autoCapitalize='none'
+        secureTextEntry={true}
       />
       <Button onPress={auth} title="Log in" />
     </View>
