@@ -1,6 +1,7 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react';
 
 export default function MovieDetails({route, navigation}) {
 
@@ -25,6 +26,12 @@ export default function MovieDetails({route, navigation}) {
     ),
   })
 
+  const [highlight, setHighlight] = useState(0)
+
+  const rateClicked = () => {
+    console.log(highlight)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.starContainer}>
@@ -36,6 +43,26 @@ export default function MovieDetails({route, navigation}) {
         <Text style={styles.white}>({movie.number_of_ratings})</Text>
       </View>
       <Text style={styles.description}>{movie.description}</Text>
+      <View style={{borderBottomColor: "white", borderBottomWidth: 2,}}></View>
+      <Text style={styles.description}>Rate it!</Text>
+      <View style={styles.starContainer}>
+        <Pressable onPress={() => setHighlight(1)}>
+          <FontAwesomeIcon style={highlight > 0 ? styles.purple : styles.grey} icon={faStar} size={48} />
+        </Pressable>
+        <Pressable onPress={() => setHighlight(2)}>
+          <FontAwesomeIcon style={highlight > 1 ? styles.purple : styles.grey} icon={faStar} size={48} />
+        </Pressable>
+        <Pressable onPress={() => setHighlight(3)}>
+          <FontAwesomeIcon style={highlight > 2 ? styles.purple : styles.grey} icon={faStar} size={48} />
+        </Pressable>
+        <Pressable onPress={() => setHighlight(4)}>
+          <FontAwesomeIcon style={highlight > 3 ? styles.purple : styles.grey} icon={faStar} size={48} />
+        </Pressable>
+        <Pressable onPress={() => setHighlight(5)}>
+          <FontAwesomeIcon style={highlight > 4 ? styles.purple : styles.grey} icon={faStar} size={48} />
+        </Pressable>
+      </View>
+      <Button title="Rate" onPress={rateClicked}/>
     </View>
   );
 }
@@ -71,5 +98,11 @@ const styles = StyleSheet.create({
   },
   white: {
     color: 'white',
+  },
+  purple: {
+    color: 'purple',
+  },
+  grey: {
+    color: 'grey',
   },
 });
