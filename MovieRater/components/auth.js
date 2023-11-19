@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Auth({navigation}) {
 
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ regView, setRegView ] = useState(false)
 
   useEffect(() => {
     navigation.setOptions({
@@ -23,22 +24,42 @@ export default function Auth({navigation}) {
   }, [])
 
   const auth = () => {
-    fetch(`http://192.168.1.177:8000/auth/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        username,
-        password,
-    })
-    })
-    .then(res => res.json())
-    .then(res => {
-        saveData(res.token)
-        navigation.navigate("MovieList")
-    })
-    .catch(error => console.log(error))
+    if (regView) {
+      fetch(`http://192.168.1.177:8000/api/users/`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          username,
+          password,
+      })
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+          setRegView(false)
+      })
+      .catch(error => console.log(error))
+    } else {
+      fetch(`http://192.168.1.177:8000/auth/`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          username,
+          password,
+      })
+      })
+      .then(res => res.json())
+      .then(res => {
+          console.log(res)
+          saveData(res.token)
+          navigation.navigate("MovieList")
+      })
+      .catch(error => console.log(error))
+    }
   }
 
   const saveData = async (token) => {
@@ -48,6 +69,10 @@ export default function Auth({navigation}) {
   const getData = async () => {
     token = await AsyncStorage.getItem('MR_Token');
     if (token) navigation.navigate("MovieList")
+  }
+
+  const toggleView = () => {
+    setRegView(!regView)
   }
 
   return (
@@ -69,7 +94,12 @@ export default function Auth({navigation}) {
         autoCapitalize='none'
         secureTextEntry={true}
       />
-      <Button onPress={auth} title="Log in" />
+      <Button onPress={auth} title={regView ? "Sign up" : "Log in"} />
+      <TouchableOpacity onPress={toggleView}>
+        {regView
+        ? <Text style={styles.viewText}>Already have an account? Log in here.</Text>
+        : <Text style={styles.viewText}>Don't have an account? Sign up here.</Text> }
+      </TouchableOpacity>
     </View>
   );
 }
@@ -90,5 +120,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 10,
     margin: 10,
+  },
+  viewText: {
+    color: 'white',
+    fontSize: 20,
+    paddingTop: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
