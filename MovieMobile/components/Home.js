@@ -1,34 +1,35 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 export default function Home({msg}) {
     const [name, setName] = useState('Rok')
   return (
     <View style={styles.home}>
-      <Text style={styles.name}>{name}</Text>
-      <TextInput
-        style={{height: 40, width: 100, backgroundColor: 'red'}}
-        value={name}
-        placeholder='type in your name'
-        onChangeText={(text) => setName(text)}
-      />
-      <Button
-        onPress={() => alert(`${name} clicked the button!`)}
-        title="Click me!"
-      />
+        <FlatList
+            data={[
+                {key: 'Roks0'},
+                {key: 'Roks1'},
+                {key: 'Roks2'},
+                {key: 'Roks3'},
+                {key: 'Roks4'},
+                {key: 'Roks5'},
+                {key: 'Roks6'},
+                {key: 'Roks7'},
+                {key: 'Roks8'},
+                {key: 'Roks9'},
+            ]}
+            renderItem={({item}) => <Text style={styles.text}>{item.key}</Text>}
+        />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   home: {
-    flex: 3,
+    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  name: {
-    color: '#0000ff',
-    marginBottom: 30,
+  text: {
+    fontSize: 40,
   },
 });
