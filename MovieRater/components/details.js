@@ -2,6 +2,7 @@ import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MovieDetails({route, navigation}) {
 
@@ -32,24 +33,31 @@ export default function MovieDetails({route, navigation}) {
 
   const rateClicked = () => {
     if (highlight > 0 && highlight < 6) {
-      fetch(`http://192.168.1.177:8000/api/movies/${movie.id}/rate_movie/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
-        },
-        body: JSON.stringify({
-          stars: highlight
-        })
-      })
-      .then(res => res.json())
-      .then(res => {
-        setHighlight(0)
-        Alert.alert("Rating", res.message)
-      })
-      .catch(error => Alert.alert("Error", error))
+      postData()
     }    
   }
+
+  const postData = async () => {
+    token = await AsyncStorage.getItem('MR_Token');
+    if (!token) navigation.navigate("Auth")
+
+    fetch(`http://192.168.1.177:8000/api/movies/${movie.id}/rate_movie/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+      },
+      body: JSON.stringify({
+        stars: highlight
+      })
+    })
+    .then(res => res.json())
+    .then(res => {
+      setHighlight(0)
+      Alert.alert("Rating", res.message)
+    })
+    .catch(error => Alert.alert("Error", error))
+}
 
   return (
     <View style={styles.container}>

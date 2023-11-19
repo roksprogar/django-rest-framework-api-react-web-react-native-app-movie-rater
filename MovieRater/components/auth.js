@@ -19,6 +19,7 @@ export default function Auth({navigation}) {
         fontSize: 24,
       },
     })
+    getData()
   }, [])
 
   const auth = () => {

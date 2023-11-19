@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -25,10 +26,21 @@ export default function MovieList({navigation}) {
       ),
     })
 
+    getData()
+  }, [])
+
+  const movieClicked = (movie) => {
+    navigation.navigate("MovieDetails", {movie: movie})
+  }
+
+  const getData = async () => {
+    token = await AsyncStorage.getItem('MR_Token');
+    if (!token) navigation.navigate("Auth")
+
     fetch('http://192.168.1.177:8000/api/movies/', {
       method: 'GET',
       headers: {
-        'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+        'Authorization': `Token ${token}`,
       }
     })
     .then(res => res.json())
@@ -36,10 +48,6 @@ export default function MovieList({navigation}) {
       setMovies(jsonRes)
     })
     .catch(error => console.log(error))
-  }, [])
-
-  const movieClicked = (movie) => {
-    navigation.navigate("MovieDetails", {movie: movie})
   }
 
   return (
