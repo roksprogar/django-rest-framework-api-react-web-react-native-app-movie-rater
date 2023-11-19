@@ -1,13 +1,21 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function Home({msg}) {
     const [name, setName] = useState('Rok')
   return (
     <View style={styles.home}>
-      <Text style={styles.text}>Btn</Text>
       <Text style={styles.name}>{name}</Text>
-      <Text style={styles.text}>Btn</Text>
+      <TextInput
+        style={{height: 40, width: 100, backgroundColor: 'red'}}
+        value={name}
+        placeholder='type in your name'
+        onChangeText={(text) => setName(text)}
+      />
+      <Button
+        onPress={() => alert(`${name} clicked the button!`)}
+        title="Click me!"
+      />
     </View>
   );
 }
@@ -21,9 +29,6 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#0000ff',
-    flex: 6,
-  },
-  text: {
-    flex: 3,
+    marginBottom: 30,
   },
 });
