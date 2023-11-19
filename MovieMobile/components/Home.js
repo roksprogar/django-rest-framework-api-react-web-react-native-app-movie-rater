@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
 export default function Home({msg}) {
     const [name, setName] = useState('Rok')
   return (
     <View style={styles.home}>
+        <ImageBackground
+            style={{width: '100%', height: '100%'}}
+            source={require('../assets/adaptive-icon.png')}>
         <FlatList
             data={[
                 {key: 'Roks0'},
@@ -20,6 +23,7 @@ export default function Home({msg}) {
             ]}
             renderItem={({item}) => <Text style={styles.text}>{item.key}</Text>}
         />
+        </ImageBackground>
     </View>
   );
 }
@@ -32,4 +36,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 40,
   },
+
 });
