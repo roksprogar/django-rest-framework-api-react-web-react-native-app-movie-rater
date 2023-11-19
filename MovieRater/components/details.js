@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
@@ -16,6 +16,13 @@ export default function MovieDetails({route, navigation}) {
       fontWeight: 'bold',
       fontSize: 24,
     },
+    headerRight: () => (
+      <Button
+        title="Edit"
+        color="white"
+        onPress={() => navigation.navigate("MovieEdit", {movie: movie})}
+      />
+    ),
   })
 
   return (
