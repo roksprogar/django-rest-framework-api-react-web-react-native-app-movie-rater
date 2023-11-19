@@ -33,6 +33,7 @@ export default function MovieList() {
             <Text style={styles.itemText} key={item.id}>{item.title}</Text>
           </View>
         )}
+        
       />
     </View>
   );
