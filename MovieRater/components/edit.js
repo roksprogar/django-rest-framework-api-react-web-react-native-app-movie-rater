@@ -1,42 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function MovieEdit({route, navigation}) {
 
   const { movie } = route.params
 
-  navigation.setOptions({
-    title: movie.title,
-    headerStyle: {
-      backgroundColor: 'orange',
-    },
-    headerTintColor: 'white',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 24,
-    },
-  })
+  useEffect(() => {
+    navigation.setOptions({
+      title: movie.title,
+      headerStyle: {
+        backgroundColor: 'orange',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 24,
+      },
+    })
+  }, [])
 
   const [ title, setTitle ] = useState(movie.title)
   const [ description, setDescription ] = useState(movie.description)
 
   const saveMovie = () => {
-    fetch(`http://192.168.1.177:8000/api/movies/${movie.id}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
-      },
-      body: JSON.stringify({
-        title,
-        description,
+    if (movie.id) {
+      fetch(`http://192.168.1.177:8000/api/movies/${movie.id}/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+        },
+        body: JSON.stringify({
+          title,
+          description,
+        })
       })
-    })
-    .then(res => res.json())
-    .then(movie => {
-      navigation.navigate("MovieDetails", {movie: movie})
-    })
-    .catch(error => console.log(error))
+      .then(res => res.json())
+      .then(movie => {
+        navigation.navigate("MovieDetails", {movie: movie})
+      })
+      .catch(error => console.log(error))
+    } else {
+      fetch(`http://192.168.1.177:8000/api/movies/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+        },
+        body: JSON.stringify({
+          title,
+          description,
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        navigation.navigate("MovieList")
+      })
+      .catch(error => console.log(error))
+    }
   }
 
   return (
@@ -55,7 +76,7 @@ export default function MovieEdit({route, navigation}) {
         onChangeText={text => setDescription(text)}
         value={description}
       />
-      <Button onPress={saveMovie} title="Save" />
+      <Button onPress={saveMovie} title={movie.id ? "Save" : "Add"} />
     </View>
   );
 }

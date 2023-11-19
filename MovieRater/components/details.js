@@ -1,30 +1,32 @@
 import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function MovieDetails({route, navigation}) {
 
   const { movie } = route.params
 
-  navigation.setOptions({
-    title: movie.title,
-    headerStyle: {
-      backgroundColor: 'orange',
-    },
-    headerTintColor: 'white',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 24,
-    },
-    headerRight: () => (
-      <Button
-        title="Edit"
-        color="white"
-        onPress={() => navigation.navigate("MovieEdit", {movie: movie})}
-      />
-    ),
-  })
+  useEffect(() => {
+    navigation.setOptions({
+      title: movie.title,
+      headerStyle: {
+        backgroundColor: 'orange',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 24,
+      },
+      headerRight: () => (
+        <Button
+          title="Edit"
+          color="white"
+          onPress={() => navigation.navigate("MovieEdit", {movie: movie})}
+        />
+      ),
+    })
+  }, [])
 
   const [highlight, setHighlight] = useState(0)
 

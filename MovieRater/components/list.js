@@ -1,11 +1,30 @@
 import { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function MovieList({navigation}) {
 
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
+    navigation.setOptions({
+      title: "Movies",
+      headerStyle: {
+        backgroundColor: 'orange',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 24,
+      },
+      headerRight: () => (
+        <Button
+          title="New"
+          color="white"
+          onPress={() => navigation.navigate("MovieEdit", {movie: { title: '', description: ''}})}
+        />
+      ),
+    })
+
     fetch('http://192.168.1.177:8000/api/movies/', {
       method: 'GET',
       headers: {
