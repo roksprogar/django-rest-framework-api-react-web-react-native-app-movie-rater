@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 
 export default function MovieList() {
 
@@ -21,11 +21,17 @@ export default function MovieList() {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View>
+      <Image
+        source={require('../assets/MR_logo.png')}
+        style={{width: '100%', height: 135, paddingTop: 30}}
+      />
       <FlatList
         data={movies}
         renderItem={({item}) => (
-          <Text key={item.id}>{item.title}</Text>
+          <View style={styles.item}>
+            <Text style={styles.itemText} key={item.id}>{item.title}</Text>
+          </View>
         )}
       />
     </View>
@@ -39,5 +45,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row-reverse',
+  },
+  item: {
+    flex: 1,
+    padding: 10,
+    heaight: 50,
+    backgroundColor: '#282C35',
+  },
+  itemText: {
+     color: '#fff',
+     fontSize: 24,
   },
 });
