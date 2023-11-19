@@ -5,21 +5,25 @@ export default function Home({msg}) {
     const [name, setName] = useState('Rok')
   return (
     <View style={styles.home}>
-      <Text>{msg}</Text>
+      <Text style={styles.text}>Btn</Text>
       <Text style={styles.name}>{name}</Text>
+      <Text style={styles.text}>Btn</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   home: {
-    flex: 1,
+    flex: 3,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   name: {
     color: '#0000ff',
-    marginTop: 30,
+    flex: 6,
+  },
+  text: {
+    flex: 3,
   },
 });
