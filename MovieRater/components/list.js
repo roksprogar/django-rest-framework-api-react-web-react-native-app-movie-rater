@@ -14,7 +14,6 @@ export default function MovieList({navigation}) {
     })
     .then(res => res.json())
     .then(jsonRes => {
-      console.log(jsonRes)
       setMovies(jsonRes)
     })
     .catch(error => console.log(error))
