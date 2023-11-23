@@ -5,9 +5,10 @@ import Header from './components/header'
 function App() {
   return (
     <div className="App">
-      <Header />
+      <Header info="This is our header!" myNumber="6" />
+      <Header info="This is another header!" />
       <p>main content</p>
-      <Footer />
+      <Footer trademark="page by Rok"/>
     </div>
   );
 }
