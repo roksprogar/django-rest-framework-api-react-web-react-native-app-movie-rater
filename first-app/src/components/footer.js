@@ -1,16 +1,26 @@
 import React, { Component } from 'react'
 
 class Footer extends Component {
-    changed(){
-        console.log('first')
+    state = {
+        name: 'Krystian',
+        age: 35,
     }
+
+    changed = evt => {
+        this.setState({name: evt.target.value})
+        console.log(this.state.name)
+    }
+
     render() {
         return (
             <>
                 <h2 onClick={this.props.createAlert}>
                     {this.props.trademark}
                 </h2>
-                <input onChange={this.changed} type='text' />
+                <input
+                    value={this.state.name}
+                    onChange={this.changed} type='text'
+                />
             </>
         )
     }
