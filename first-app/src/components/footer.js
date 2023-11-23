@@ -4,6 +4,7 @@ class Footer extends Component {
     state = {
         name: '',
         age: 35,
+        isLogin: true
     }
 
     componentDidMount() {
@@ -18,13 +19,26 @@ class Footer extends Component {
     render() {
         return (
             <>
-                <h2 onClick={this.props.createAlert}>
-                    {this.props.trademark}
-                </h2>
-                <input
-                    value={this.state.name}
-                    onChange={this.changed} type='text'
-                />
+                { this.state.isLogin ? (
+                    <>
+                        <h2 onClick={this.props.createAlert}>
+                            {this.props.trademark}
+                        </h2>
+                        <input
+                            value={this.state.name}
+                            onChange={this.changed} type='text'
+                        />
+                    </>
+                ) : (
+                    <>
+                        <h2>You can't see this content</h2>
+                        <h2>You must log in</h2>
+                        <input
+                            value={this.state.name}
+                            onChange={this.changed} type='text'
+                        />
+                    </>
+                )}
             </>
         )
     }
