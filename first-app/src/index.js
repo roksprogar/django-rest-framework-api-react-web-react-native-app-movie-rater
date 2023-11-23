@@ -8,6 +8,12 @@ import Footer from './components/footer';
 import Header from './components/header';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const context = React.createContext();
+export const CtxConsumer = context.Consumer;
+
+const animals = ['snake', 'elephant', 'lion']
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,7 +32,9 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <context.Provider value={{animals: animals}}>
+      <RouterProvider router={router} />
+    </context.Provider>
   </React.StrictMode>
 );
 
