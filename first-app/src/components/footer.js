@@ -17,28 +17,19 @@ class Footer extends Component {
     }
 
     render() {
+
+        const animals = ['cat', 'dog', 'horse']
+
         return (
             <>
-                { this.state.isLogin ? (
-                    <>
-                        <h2 onClick={this.props.createAlert}>
-                            {this.props.trademark}
-                        </h2>
-                        <input
-                            value={this.state.name}
-                            onChange={this.changed} type='text'
-                        />
-                    </>
-                ) : (
-                    <>
-                        <h2>You can't see this content</h2>
-                        <h2>You must log in</h2>
-                        <input
-                            value={this.state.name}
-                            onChange={this.changed} type='text'
-                        />
-                    </>
-                )}
+                {animals.map(animal => {
+                    return (
+                        <div key={animal}>
+                            <h1>{animal}</h1>
+                            <h1>{animal}</h1>
+                        </div>
+                    )
+                })}
             </>
         )
     }
