@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 
 class Footer extends Component {
     state = {
-        name: 'Krystian',
+        name: '',
         age: 35,
+    }
+
+    componentDidMount() {
+        this.setState({name: 'myName'})
     }
 
     changed = evt => {
