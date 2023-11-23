@@ -1,6 +1,7 @@
 import './App.css';
 import Footer from './components/footer';
 import Header from './components/header';
+import Numbers from './components/numbers';
 import styled from 'styled-components';
 
 function createAlert(){
@@ -28,12 +29,7 @@ const Paragraph = styled.p`
 function App() {
   return (
     <div className="App">
-      <Header info="This is our header!" />
-      <Header info="This is another header!" />
-      <p style={pStyle}>main content</p>
-      <Paragraph>New styled</Paragraph>
-      <Footer createAlert={createAlert} trademark="page by Rok"/>
-      <ShowMessage toShow={false} />
+      <Numbers />
     </div>
   );
 }
