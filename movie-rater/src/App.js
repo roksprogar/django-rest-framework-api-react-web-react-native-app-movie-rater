@@ -25,7 +25,7 @@ function App() {
       <div className='layout'>
         <div>
           { movies.map( movie => {
-            return <h2>{movie}</h2>
+            return <h2>{movie.title}</h2>
           })}
         </div>
         <div>Movie details</div>
