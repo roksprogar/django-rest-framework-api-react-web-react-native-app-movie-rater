@@ -1,13 +1,24 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { API } from "../api-service"
 
 function MovieEdit(props) {
   const [title, setTitle] = useState(props.editedMovie.title)
   const [description, setDescription] = useState(props.editedMovie.description)
 
+  useEffect(() => {
+    setTitle(props.editedMovie.title)
+    setDescription(props.editedMovie.description)
+  }, [props.editedMovie])
+
   const updateClicked = () => {
     API.updateMovie(props.editedMovie.id, {title, description})
     .then(response => props.updatedMovie(response))
+    .catch(error => console.log(error))
+  }
+
+  const createClicked = () => {
+    API.createMovie({title, description})
+    .then(response => props.movieCreated(response))
     .catch(error => console.log(error))
   }
 
@@ -31,7 +42,7 @@ function MovieEdit(props) {
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           ></textarea>
-          <button onClick={updateClicked}>Update</button>
+          { props.editedMovie.id ? <button onClick={updateClicked}>Update</button> : <button onClick={createClicked}>Create</button> }
         </>
       ) : null}
     </>

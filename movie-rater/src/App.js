@@ -28,7 +28,6 @@ function App() {
   }
 
   const editClicked = (movie) => {
-    console.log(movie)
     setEditedMovie(movie)
     setSelectedMovie(null)
  }
@@ -43,9 +42,18 @@ function App() {
    setMovies(newMovies)
 }
 
-const deleteClicked = (movie) => {
+const newMovie = () => {
+  setEditedMovie({title: '', description: ''})
+  setSelectedMovie(null)
+}
+
+const deleteClicked = movie => {
     console.log(movie)
-  }
+}
+
+const movieCreated = newMovie => {
+  setMovies([...movies, newMovie])
+}
 
   return (
     <div className="App">
@@ -53,9 +61,14 @@ const deleteClicked = (movie) => {
         <h1>Movie rater</h1>
       </header>
       <div className='layout'>
-        <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} deleteClicked={deleteClicked} />
+        <div>
+          <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} deleteClicked={deleteClicked} />
+          <button onClick={newMovie}>New movie</button>
+        </div>
         <MovieDetails updateMovie={loadMovie} movie={selectedMovie} />
-        { editedMovie ? <MovieEdit editedMovie={editedMovie} updatedMovie={updatedMovie}/> : null }
+        { editedMovie ?
+        <MovieEdit editedMovie={editedMovie} updatedMovie={updatedMovie} movieCreated={movieCreated} />
+        : null }
       </div>
     </div>
   );
