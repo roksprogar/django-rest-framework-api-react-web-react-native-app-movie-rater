@@ -33,7 +33,17 @@ function App() {
     setSelectedMovie(null)
  }
 
-  const deleteClicked = (movie) => {
+ const updatedMovie = (movie) => {
+  const newMovies = movies.map(mov => {
+    if (movie.id === mov.id) {
+      return movie
+    }
+    return mov
+   })
+   setMovies(newMovies)
+}
+
+const deleteClicked = (movie) => {
     console.log(movie)
   }
 
@@ -45,7 +55,7 @@ function App() {
       <div className='layout'>
         <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} deleteClicked={deleteClicked} />
         <MovieDetails updateMovie={loadMovie} movie={selectedMovie} />
-        { editedMovie ? <MovieEdit editedMovie={editedMovie} /> : null }
+        { editedMovie ? <MovieEdit editedMovie={editedMovie} updatedMovie={updatedMovie}/> : null }
       </div>
     </div>
   );

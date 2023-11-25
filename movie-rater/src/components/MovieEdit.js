@@ -7,7 +7,7 @@ function MovieEdit(props) {
 
   const updateClicked = () => {
     API.updateMovie(props.editedMovie.id, {title, description})
-    .then(response => console.log(response))
+    .then(response => props.updatedMovie(response))
     .catch(error => console.log(error))
   }
 
