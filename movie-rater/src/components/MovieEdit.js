@@ -1,11 +1,14 @@
 import { useState } from "react"
+import { API } from "../api-service"
 
 function MovieEdit(props) {
   const [title, setTitle] = useState(props.editedMovie.title)
   const [description, setDescription] = useState(props.editedMovie.description)
 
   const updateClicked = () => {
-    console.log("update here")
+    API.updateMovie(props.editedMovie.id, {title, description})
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
   }
 
   return (
