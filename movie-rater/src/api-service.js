@@ -10,6 +10,17 @@ export class API {
         .then(response => response.json())
     }
 
+    static signupUser(body) {
+        return fetch('http://0.0.0.0:8000/api/users/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        .then(response => response.json())
+    }
+
     static createMovie(body, token) {
         return fetch('http://0.0.0.0:8000/api/movies/', {
             method: 'POST',
