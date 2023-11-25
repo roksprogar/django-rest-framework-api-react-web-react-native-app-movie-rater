@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -19,10 +19,23 @@ const router = createBrowserRouter([
   },
 ]);
 
+export const TokenContext = createContext(null)
+
+function Router() {
+
+  const [token, setToken] = useState('')
+
+  return (
+    <React.StrictMode>
+      <TokenContext.Provider value={{token, setToken}}>
+        <RouterProvider router={router} />
+      </TokenContext.Provider>
+    </React.StrictMode>
+  )
+}
+
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <Router />
 );
 
 // If you want to start measuring performance in your app, pass a function
