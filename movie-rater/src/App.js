@@ -6,24 +6,15 @@ import MovieEdit from './components/MovieEdit';
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilm, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { useFetch } from "./hooks/useFetch";
 function App() {
   const [movies, setMovies] = useState([])
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [editedMovie, setEditedMovie] = useState(null)
-  const [token, setToken, deleteToken] = useCookies(['mr-token'])
+  const [token, , deleteToken] = useCookies(['mr-token'])
+  const [data, loading, error] = useFetch()
 
   useEffect(() => {
-    fetch('http://0.0.0.0:8000/api/movies/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token['mr-token']}`,
-      }
-    })
-    .then(response => response.json())
-    .then(response => setMovies(response))
-    .catch(error => console.log(error))
   }, [])
 
   useEffect(() => {
