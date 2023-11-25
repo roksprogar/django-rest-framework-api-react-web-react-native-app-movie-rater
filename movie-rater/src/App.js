@@ -5,7 +5,7 @@ import MovieDetails from './components/MovieDetails';
 
 function App() {
   const [movies, setMovies] = useState([])
-  const [selectedMovie, setSelectedMovie] = useState({})
+  const [selectedMovie, setSelectedMovie] = useState(null)
 
   useEffect(() => {
     fetch('http://0.0.0.0:8000/api/movies/', {
