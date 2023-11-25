@@ -5,13 +5,13 @@ import MovieDetails from './components/MovieDetails';
 import MovieEdit from './components/MovieEdit';
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faFilm, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [movies, setMovies] = useState([])
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [editedMovie, setEditedMovie] = useState(null)
-  const [token] = useCookies(['mr-token'])
+  const [token, setToken, deleteToken] = useCookies(['mr-token'])
 
   useEffect(() => {
     fetch('http://0.0.0.0:8000/api/movies/', {
@@ -48,28 +48,32 @@ function App() {
     return mov
    })
    setMovies(newMovies)
-}
+  }
 
-const newMovie = () => {
-  setEditedMovie({title: '', description: ''})
-  setSelectedMovie(null)
-}
+  const newMovie = () => {
+    setEditedMovie({title: '', description: ''})
+    setSelectedMovie(null)
+  }
 
-const deleteClicked = movie => {
-    const newMovies = movies.filter( mov => mov.id !== movie.id )
-    setMovies(newMovies)
-}
+  const deleteClicked = movie => {
+      const newMovies = movies.filter( mov => mov.id !== movie.id )
+      setMovies(newMovies)
+  }
 
-const movieCreated = newMovie => {
-  setMovies([...movies, newMovie])
-}
+  const movieCreated = newMovie => {
+    setMovies([...movies, newMovie])
+  }
+
+  const logoutUser = () => {
+    deleteToken('mr-token')
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-        
         <h1><FontAwesomeIcon icon={faFilm}/>Movie rater</h1>
       </header>
+      <FontAwesomeIcon icon={faSignOutAlt} onClick={logoutUser}/>
       <div className='layout'>
         <div>
           <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} deleteClicked={deleteClicked} />
