@@ -3,9 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 
 function MovieDetails(props) {
-    const [highlighted, setHighlighted] = useState(0)
+    const [highlighted, setHighlighted] = useState(-1)
 
     const movie = props.movie
+
+    const rateClicked = rating => {
+      fetch(`http://0.0.0.0:8000/api/movies/${movie.id}/rate_movie/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+        },
+        body: JSON.stringify({
+          stars: rating
+        })
+      })
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(error => console.log(error))  
+    }
 
   return (
     <div>
@@ -27,8 +43,9 @@ function MovieDetails(props) {
                       key={i}
                       icon={faStar}
                       className={highlighted >= i ? 'purple' : ''}
-                      onMouseEnter={setHighlighted(i)}
-                      onMouseLeave={setHighlighted(0)}
+                      onMouseEnter={() => setHighlighted(i)}
+                      onMouseLeave={() => setHighlighted(-1)}
+                      onClick={() => rateClicked(i)}
                     />
                   )
                 })
