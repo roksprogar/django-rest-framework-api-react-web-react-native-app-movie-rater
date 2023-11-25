@@ -1,10 +1,11 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App'
 import Auth from './components/auth';
+import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -19,17 +20,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-export const TokenContext = createContext(null)
-
 function Router() {
-
-  const [token, setToken] = useState('')
-
   return (
     <React.StrictMode>
-      <TokenContext.Provider value={{token, setToken}}>
+      <CookiesProvider>
         <RouterProvider router={router} />
-      </TokenContext.Provider>
+      </CookiesProvider>
     </React.StrictMode>
   )
 }
