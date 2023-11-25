@@ -28,6 +28,7 @@ function App() {
   }
 
   const editClicked = (movie) => {
+    console.log(movie)
     setEditedMovie(movie)
     setSelectedMovie(null)
  }
@@ -44,7 +45,7 @@ function App() {
       <div className='layout'>
         <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked} deleteClicked={deleteClicked} />
         <MovieDetails updateMovie={loadMovie} movie={selectedMovie} />
-        <MovieEdit editedMovie={editedMovie} />
+        { editedMovie ? <MovieEdit editedMovie={editedMovie} /> : null }
       </div>
     </div>
   );
