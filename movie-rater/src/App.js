@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import MovieList from './components/MovieList';
+import MovieDetails from './components/MovieDetails';
 
 function App() {
   const [movies, setMovies] = useState([])
-  const [selectedMovie, setSelectedMovie] = useState(null)
+  const [selectedMovie, setSelectedMovie] = useState({})
 
   useEffect(() => {
     fetch('http://0.0.0.0:8000/api/movies/', {
@@ -30,7 +31,7 @@ function App() {
       </header>
       <div className='layout'>
         <MovieList movies={movies} movieClicked={movieClicked}/>
-        <div>Movie details</div>
+        <MovieDetails movie={selectedMovie} />
       </div>
     </div>
   );
