@@ -48,7 +48,8 @@ const newMovie = () => {
 }
 
 const deleteClicked = movie => {
-    console.log(movie)
+    const newMovies = movies.filter( mov => mov.id !== movie.id )
+    setMovies(newMovies)
 }
 
 const movieCreated = newMovie => {

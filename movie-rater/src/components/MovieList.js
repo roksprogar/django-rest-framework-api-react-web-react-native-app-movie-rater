@@ -1,5 +1,6 @@
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { API } from "../api-service";
 
 function MovieList(props) {
   const movieClicked = movie => {
@@ -11,7 +12,9 @@ function MovieList(props) {
   }
 
   const deleteClicked = (movie) => {
-    props.deleteClicked(movie)
+    API.deleteMovie(movie.id)
+    .then(() => props.deleteClicked(movie))
+    .catch(error => console.log(error))
   }
 
   return (
