@@ -5,11 +5,9 @@ import { useCookies } from "react-cookie"
 function Auth(props) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
-  const [ token, setToken ] = useCookies(['mr-token'])
+  const [token, setToken] = useCookies(['mr-token'])
 
   useEffect(() => {
-    console.log(token)
     if (token["mr-token"]) window.location.href = '/movies'
   }, [token])
   

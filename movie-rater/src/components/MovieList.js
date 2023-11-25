@@ -1,8 +1,11 @@
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { API } from "../api-service";
+import { useCookies } from "react-cookie";
 
 function MovieList(props) {
+  const [token] = useCookies(['mr-token'])
+  
   const movieClicked = movie => {
     props.movieClicked(movie)
   }
@@ -12,7 +15,7 @@ function MovieList(props) {
   }
 
   const deleteClicked = (movie) => {
-    API.deleteMovie(movie.id)
+    API.deleteMovie(movie.id, token['mr-token'])
     .then(() => props.deleteClicked(movie))
     .catch(error => console.log(error))
   }
