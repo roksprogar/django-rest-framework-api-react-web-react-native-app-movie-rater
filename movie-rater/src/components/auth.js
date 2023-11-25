@@ -24,36 +24,42 @@ function Auth(props) {
     .catch(error => console.log(error))
   }
 
+  const isDisabled = username.length === 0 || password.length === 0
+
   return (
-    <>
-      <h1>{isLoginView ? 'Log In': 'Sign Up'}</h1>
-      <label htmlFor="username">Username</label><br/>
-      <input
-        id="username"
-        type="text"
-        placeholder="username"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
-      /><br/>
-      <label htmlFor="password">Password</label><br/>
-      <input
-        id="password"
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-      />
-      <div>
+    <div className="App">
+      <header className="App-header">
+        <h1>{isLoginView ? 'Log In': 'Sign Up'}</h1>
+      </header>
+      <div className="login-container">
+        <label htmlFor="username">Username</label><br/>
+        <input
+          id="username"
+          type="text"
+          placeholder="username"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        /><br/>
+        <label htmlFor="password">Password</label><br/>
+        <input
+          id="password"
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <div>
+          { isLoginView ?
+            <button onClick={loginClicked} disabled={isDisabled}>Log In</button> :
+            <button onClick={signupClicked} disabled={isDisabled}>Sign Up</button>
+          }
+        </div>
         { isLoginView ?
-          <button onClick={loginClicked}>Log In</button> :
-          <button onClick={signupClicked}>Sign Up</button>
+          <p onClick={() => setIsLoginView(false)}>You don't have an account? Sign up here!</p> :
+          <p onClick={() => setIsLoginView(true)}>You already have an account? Log in here!</p>
         }
       </div>
-      { isLoginView ?
-        <p onClick={() => setIsLoginView(false)}>You don't have an account? Sign up here!</p> :
-        <p onClick={() => setIsLoginView(true)}>You already have an account? Log in here!</p>
-      }
-      </>
+    </div>
   )
 }
 
