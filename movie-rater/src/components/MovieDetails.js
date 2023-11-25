@@ -18,9 +18,21 @@ function MovieDetails(props) {
           stars: rating
         })
       })
+      .then(() => getMovieDetails())
+      .catch(error => console.log(error))
+    }
+
+    const getMovieDetails = () => {
+      fetch(`http://0.0.0.0:8000/api/movies/${movie.id}/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token 42c3f93e53684418e372619c503ace234a56685f',
+        }
+      })
       .then(response => response.json())
-      .then(response => console.log(response))
-      .catch(error => console.log(error))  
+      .then(response => props.updateMovie(response))
+      .catch(error => console.log(error))
     }
 
   return (

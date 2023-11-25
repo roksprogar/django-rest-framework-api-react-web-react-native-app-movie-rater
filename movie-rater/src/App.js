@@ -24,6 +24,8 @@ function App() {
     setSelectedMovie(movie)
   }
 
+  const updateMovie = (movie) => setSelectedMovie(movie)
+
   return (
     <div className="App">
       <header className="App-header">
@@ -31,7 +33,7 @@ function App() {
       </header>
       <div className='layout'>
         <MovieList movies={movies} movieClicked={movieClicked}/>
-        <MovieDetails movie={selectedMovie} />
+        <MovieDetails updateMovie={updateMovie} movie={selectedMovie} />
       </div>
     </div>
   );
